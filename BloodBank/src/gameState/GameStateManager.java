@@ -6,7 +6,7 @@ public class GameStateManager extends GameStateManagerAb{
 	
 	//public static final int NUMGAMESTATES = 2;
 	//public static final int LEVEL1STATE = 1;
-	
+	public final static int LEVELSELECTOR =2;
 	
 	public GameStateManager(){
 		super();

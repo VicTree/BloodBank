@@ -1,18 +1,19 @@
 package gameState;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
 import tileMap.Background;
 
-public class MenuState extends GameState {
-	
-	private Background bg;
+public class LevelSelectState extends GameState{
+private Background bg;
 	
 	private int currentChoice = 0;
 	String title;
 	private String[] options;
-	private String[] standardOptions = {"Start", "Help", "Quit"};
+	private String[] standardOptions = {"Level 1", "Level 2", "Level 2"};
 	
 	private Color titleColor;
 	private Font titleFont;
@@ -21,9 +22,9 @@ public class MenuState extends GameState {
 	private Color oColor;
 	private Color oColor2;
 	
-	public MenuState(GameStateManager gsm, String background,String title, String[] options,
+	public LevelSelectState(GameStateManager gsm, String background,String title, String[] options,
 			Color titleColor, Color oColor, Color oColor2, Font titleFont, Font font) {
-		
+		gsm.setState(GameStateManager.LEVELSELECTOR);
 		this.gsm = gsm;
 		this.options = options;
 		this.title = title;
@@ -46,7 +47,7 @@ public class MenuState extends GameState {
 		
 	}
 	
-	public MenuState(GameStateManager gsm, String title){
+	public LevelSelectState(GameStateManager gsm, String title){
 		this.gsm = gsm;
 		options = standardOptions;
 		this.title = title;
@@ -89,18 +90,18 @@ public class MenuState extends GameState {
 			}
 			g.drawString(options[i], 145, 140 + i * 15);
 		}
-		
+		/*instert code for map thumbnails here */
 	}
 	
 	private void select() {
 		if(currentChoice == 0) {
-			gsm.setState(GameStateManager.LEVELSELECTOR);
+			gsm.setState(GameStateManager.LEVEL1);
 		}
 		if(currentChoice == 1) {
-			// help
+			gsm.setState(GameStateManager.LEVEL2);
 		}
 		if(currentChoice == 2) {
-			System.exit(0);
+			gsm.setState(GameStateManager.LEVEL3);
 		}
 	}
 	
@@ -108,13 +109,13 @@ public class MenuState extends GameState {
 		if(k == KeyEvent.VK_ENTER){
 			select();
 		}
-		if(k == KeyEvent.VK_UP) {
+		if(k == KeyEvent.VK_LEFT) {
 			currentChoice--;
 			if(currentChoice == -1) {
 				currentChoice = options.length - 1;
 			}
 		}
-		if(k == KeyEvent.VK_DOWN) {
+		if(k == KeyEvent.VK_RIGHT) {
 			currentChoice++;
 			if(currentChoice == options.length) {
 				currentChoice = 0;
@@ -122,15 +123,4 @@ public class MenuState extends GameState {
 		}
 	}
 	public void keyReleased(int k) {}
-	
 }
-
-
-
-
-
-
-
-
-
-
