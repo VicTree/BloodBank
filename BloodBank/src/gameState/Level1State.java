@@ -17,23 +17,34 @@ public class Level1State extends GameState {
 	
 	private AudioPlayer bgMusic;
 	
-	public Level1State(GameStateManager gsm) {
+	String background;
+	String music;
+	String tileSet;
+	String map;
+	
+	
+	
+	public Level1State(GameStateManager gsm, String background, String tileSet, String map, String music) {
 		this.gsm = gsm;
+		this.background = background;
+		this.tileSet = tileSet;
+		this.map = map;
+		this.music = music;
 		init();
 	}
 	
-	public void init() {
+	public void init(){
 		
 		tileMap = new TileMap(30);
-		tileMap.loadTiles("/Tilesets/grasstileset.gif");
-		tileMap.loadMap("/Maps/level1-1.map");
+		tileMap.loadTiles("/Tilesets/" + tileSet + ".png");
+		tileMap.loadMap("/Maps/" + map + ".map");
 		tileMap.setPosition(0, 0);
 		tileMap.setTween(1);
 		
-		bg = new Background("/Backgrounds/grassbg1.gif", 0.1);
+		bg = new Background("/Backgrounds/" + background + ".png", 0.1);
 		
 		
-		bgMusic = new AudioPlayer("/Music/level1-1.mp3");
+		bgMusic = new AudioPlayer("/Music/" + music + ".mp3");
 		bgMusic.play();
 		
 	}

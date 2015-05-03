@@ -30,7 +30,7 @@ import tileMap.TileMap;
 					)
 				);
 			
-				sprites = new BufferedImage[4];
+				sprites = new BufferedImage[4]; //number subject to change
 				for(int i = 0; i < sprites.length; i++) {
 					sprites[i] = spritesheet.getSubimage(
 						i * width,
@@ -40,7 +40,7 @@ import tileMap.TileMap;
 					);
 				}
 				
-				pickedupsprites = new BufferedImage[/*need spreadsheet*/];
+				pickedupsprites = new BufferedImage[4]; //number subject to change
 				for(int i = 0; i < pickedupsprites.length; i++) {
 					pickedupsprites[i] = spritesheet.getSubimage(
 						i * width,
