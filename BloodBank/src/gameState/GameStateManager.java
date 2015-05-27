@@ -13,10 +13,17 @@ public class GameStateManager extends GameStateManagerAb{
 	public final static int LEVEL2 = 4;
 	public final static int LEVEL3 = 5;
 	
+	public final static int NumStates = 5;
+	
 	String[] options = {"Start", "Help", "Quit"};
+	String[] levelOptions = {"Level 1"};
 	
 	public GameStateManager(){
 		super();
+		gameStates = new GameState[5];
+		currentState = MENUSTATE;
+		loadState(currentState);
+		
 		   
 	}
  
@@ -29,11 +36,11 @@ public class GameStateManager extends GameStateManagerAb{
 		*/
 		
 		switch (state){
-		case 1: gameStates[state] = new MenuState(this, "background", "Title", options, Color.gray, Color.RED, Color.blue, new Font("Arial",Font.PLAIN, 20), new Font("Calibri",Font.PLAIN, 12));
+		case 1: gameStates[state] = new MenuState(this, "testBackground", "BloodBank", options, Color.gray, Color.RED, Color.blue, new Font("Arial",Font.PLAIN, 20), new Font("Calibri",Font.PLAIN, 12));
 				break;
-		case 2: gameStates[state] = new LevelSelectState(this, "background", "Title", options, Color.gray, Color.RED, Color.blue, new Font("Arial",Font.PLAIN, 20), new Font("Calibri",Font.PLAIN, 12));
+		case 2: gameStates[state] = new LevelSelectState(this, "testBackground", "Pick your stupid level", levelOptions, Color.gray, Color.RED, Color.blue, new Font("Arial",Font.PLAIN, 20), new Font("Calibri",Font.PLAIN, 12));
 				break;
-		case 3: 
+		case 3: gameStates[state] = new Level1State(this, "testBackground", "environmentMap", "Level1", "music");
 		}
 	}
 	

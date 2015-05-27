@@ -21,7 +21,7 @@ public class Background {
 		
 		try {
 			image = ImageIO.read(
-				getClass().getResourceAsStream(s)
+				getClass().getResourceAsStream("/backgrounds/" + s + ".png")
 			);
 			moveScale = ms;
 		}

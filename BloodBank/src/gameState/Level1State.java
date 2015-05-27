@@ -17,10 +17,20 @@ public class Level1State extends GameState {
 	
 	private AudioPlayer bgMusic;
 	
+	private ArrayList<PickUps> pickUps;
+	
+	private double time;
+	
 	String background;
 	String music;
 	String tileSet;
 	String map;
+	
+	Player player1;
+	Player player2;
+	ArrayList<Player> players;
+	
+	int coinIndex;
 	
 	
 	
@@ -35,17 +45,32 @@ public class Level1State extends GameState {
 	
 	public void init(){
 		
-		tileMap = new TileMap(30);
-		tileMap.loadTiles("/Tilesets/" + tileSet + ".png");
-		tileMap.loadMap("/Maps/" + map + ".map");
+		tileMap = new TileMap(50);
+		tileMap.loadTiles(tileSet);
+		tileMap.loadMap(map);
 		tileMap.setPosition(0, 0);
 		tileMap.setTween(1);
 		
-		bg = new Background("/Backgrounds/" + background + ".png", 0.1);
+		bg = new Background(background, 0.1);
 		
+		players = new ArrayList<Player>();
 		
-		bgMusic = new AudioPlayer("/Music/" + music + ".mp3");
-		bgMusic.play();
+		player1 = new Player(tileMap, "Blue Sprite Sheet (1)");
+		player1.setPosition(100, 100);
+		
+		player2 = new Player(tileMap, "Blue Sprite Sheet (1)");
+		player2.setPosition(200,100);
+		
+		players.add(player1);
+		players.add(player2);
+		
+		pickUps = new ArrayList<PickUps>();
+		time = System.nanoTime();
+		
+		coinIndex =0;
+		
+		//bgMusic = new AudioPlayer("/Music/" + music + ".mp3");
+		//bgMusic.play();
 		
 	}
 	
@@ -53,8 +78,33 @@ public class Level1State extends GameState {
 	public void update() {
 		
 		
+		player1.update();
+		player1.checkPickUps(pickUps);
+		player1.checkAttack(players);
+		
+		player2.update();
+		player2.checkPickUps(pickUps);
+		
+		for (PickUps p: pickUps){
+			p.update();
+			if(p.shouldRemove()){
+				pickUps.remove(p);
+				coinIndex -=1;
+			}
+		}
+		
+		if((System.nanoTime() - time)/2  > 999999999){
+			time = System.nanoTime();
+			pickUps.add(new PickUps(tileMap,"coinSpriteSheet"));
+			
+			pickUps.get(coinIndex).setPosition(Math.random() * 480, 100);
+			coinIndex+=1;
+		}
+		
 		// set background
 		bg.setPosition(tileMap.getx(), tileMap.gety());
+		
+		
 		
 		
 	}
@@ -67,15 +117,34 @@ public class Level1State extends GameState {
 		// draw tilemap
 		tileMap.draw(g);
 		
+		player1.draw(g);
+		player2.draw(g);
+		
+		for (PickUps p: pickUps){
+			p.draw(g);
+		}
+		
+		
 		
 	}
 	
 	public void keyPressed(int k) {
+		if(k == KeyEvent.VK_LEFT) player1.setLeft(true);
+		if(k == KeyEvent.VK_RIGHT) player1.setRight(true);
+		if(k == KeyEvent.VK_UP) player1.setUp(true);
+		if(k == KeyEvent.VK_DOWN) player1.setDown(true);
+		if(k == KeyEvent.VK_W) player1.setJumping(true);
+		if(k == KeyEvent.VK_F) player1.setShooting();
 
 	}
 	
 	public void keyReleased(int k) {
 
+		if(k == KeyEvent.VK_LEFT) player1.setLeft(false);
+		if(k == KeyEvent.VK_RIGHT) player1.setRight(false);
+		if(k == KeyEvent.VK_UP) player1.setUp(false);
+		if(k == KeyEvent.VK_DOWN) player1.setDown(false);
+		if(k == KeyEvent.VK_W) player1.setJumping(false);
 	}
 	
 }

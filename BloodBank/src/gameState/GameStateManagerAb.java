@@ -7,7 +7,7 @@ public abstract class GameStateManagerAb {
 	protected GameState[] gameStates;
 	protected int currentState;
 	
-	protected final int MENUSTATE = 0;
+	protected final int MENUSTATE = 1;
 	//public static final int NUMGAMESTATES = 2;
 	//public static final int LEVEL1STATE = 1;
 	
@@ -16,8 +16,7 @@ public abstract class GameStateManagerAb {
 		//gameStates = new GameState[NUMGAMESTATES];
 
 		
-		currentState = MENUSTATE;
-		loadState(currentState);
+		
 		
 	}
 	//looks somthing like

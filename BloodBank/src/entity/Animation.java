@@ -10,10 +10,14 @@ public class Animation {
 	private long startTime;
 	private long delay;
 	
+	private int repeatStartSpot;
+	private int repeatStopSpot;
+	
 	private boolean playedOnce;
 	
 	public Animation() {
 		playedOnce = false;
+		repeatStartSpot=0;
 	}
 	
 	public void setFrames(BufferedImage[] frames) {
@@ -22,6 +26,12 @@ public class Animation {
 		startTime = System.nanoTime();
 		playedOnce = false;
 	}
+	
+	public void setRepeatLength(int repeatSpot, int repeatStop){
+		repeatStartSpot = repeatSpot;
+		repeatStopSpot = repeatStop;
+	}
+	
 	
 	public void setDelay(long d) { delay = d; }
 	public void setFrame(int i) { currentFrame = i; }
@@ -35,8 +45,8 @@ public class Animation {
 			currentFrame++;
 			startTime = System.nanoTime();
 		}
-		if(currentFrame == frames.length) {
-			currentFrame = 0;
+		if(currentFrame == repeatStopSpot) {
+			currentFrame = repeatStartSpot;
 			playedOnce = true;
 		}
 		
@@ -45,6 +55,7 @@ public class Animation {
 	public int getFrame() { return currentFrame; }
 	public BufferedImage getImage() { return frames[currentFrame]; }
 	public boolean hasPlayedOnce() { return playedOnce; }
+	public int getRepeatStartSpot(){return repeatStartSpot;}
 	
 }
 

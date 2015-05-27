@@ -29,7 +29,7 @@ public class Player extends MapObject {
 		// animations
 		private ArrayList<BufferedImage[]> sprites;
 		private final int[] numFrames = {
-			//
+			3,4,3,4
 		};
 		
 		// animation actions
@@ -37,11 +37,11 @@ public class Player extends MapObject {
 		private static final int WALKING = 1;
 		private static final int JUMPING = 2;
 		private static final int FALLING = 3;
-		private static final int SHOOTING= 5;
-		private static final int MELEEING = 6;
-		private static final int VICTORYDANCE = 7;
-		private static final int DEATH = 8;
-		private static final int DASHING = 9;
+		private static final int SHOOTING = 3;
+		private static final int MELEEING = 5;
+		private static final int VICTORYDANCE = 6;
+		private static final int DEATH = 7;
+		private static final int DASHING = 8;
 		
 		private HashMap<String, AudioPlayer> sfx;
 		
@@ -65,7 +65,7 @@ public class Player extends MapObject {
 			
 			facingRight = true;
 			
-			coins = maxCoins = 10;
+			coins = maxCoins = 100;
 			
 			shotDamage = 3;
 			coinProjectiles = new ArrayList<Projectile>();
@@ -73,7 +73,7 @@ public class Player extends MapObject {
 			try {
 				
 				BufferedImage spritesheet = ImageIO.read(
-					getClass().getResourceAsStream("/Players" + key + ".gif"));
+					getClass().getResourceAsStream("/player/" + key + ".png"));
 				
 				sprites = new ArrayList<BufferedImage[]>();
 				for(int i = 0; i < numFrames.length; i++) {
@@ -101,8 +101,9 @@ public class Player extends MapObject {
 			
 			animation = new Animation();
 			currentAction = IDLE;
+			animation.setRepeatLength(0,3);
 			animation.setFrames(sprites.get(IDLE));
-			animation.setDelay(400);
+			animation.setDelay(1000);
 			
 			sfx = new HashMap<String, AudioPlayer>();
 		}
@@ -122,7 +123,7 @@ public class Player extends MapObject {
 		
 		
 		public void checkAttack(ArrayList<Player> players){
-			
+			players.remove(this);
 			
 			for(Player p: players){
 				
@@ -143,6 +144,16 @@ public class Player extends MapObject {
 			}
 			}
 			
+		}
+		
+		public void checkPickUps(ArrayList<PickUps> pickups){
+			for(int j = 0; j < pickups.size(); j++) {
+				if(pickups.get(j).intersects(this)) {
+					pickups.get(j).setPickedUp();
+					coins +=1;
+					break;
+				}
+			}
 		}
 		
 		
@@ -186,13 +197,13 @@ public class Player extends MapObject {
 				}
 			}
 			
-			if(currentAction == SHOOTING && !(jumping || falling)) {
-				dx = 0;
-			}
+//			if(currentAction == SHOOTING && !(jumping || falling)) {
+//				dx = 0;
+//			}
 			
 			// jumping
 			if(jumping && !falling) {
-				sfx.get("jump").play();
+				//sfx.get("jump").play();
 				dy = jumpStart;
 				falling = true;
 			}
@@ -217,10 +228,12 @@ public class Player extends MapObject {
 			
 			if(dead){
 				if(currentAction != DEATH){
-					currentAction = DEATH;
+					currentAction = DEATH;if(currentAction == SHOOTING && !(jumping || falling)) {
+						dx = 0;
+					}
 					animation.setFrames(sprites.get(DEATH));
 					animation.setDelay(100);
-					width = 30;
+					width = 22;
 				}
 				return;
 			}
@@ -238,10 +251,12 @@ public class Player extends MapObject {
 			if(coins > maxCoins) coins = maxCoins;
 			if(shooting && currentAction != SHOOTING) {
 					coins -= 1;
-					Projectile c = new Projectile(tileMap, facingRight,"coin");
-					c.setPosition(x, y);
+					Projectile c = new Projectile(tileMap, facingRight,"coin projectile");
+					if (facingRight)
+					c.setPosition(x, y-4);
+					else
+						c.setPosition(x,y-4);
 					coinProjectiles.add(c);
-				
 			}
 			
 			// update coin Projectiles
@@ -255,8 +270,7 @@ public class Player extends MapObject {
 			
 			// check done flinching
 			if(flinching) {
-				long elapsed =
-					(System.nanoTime() - flinchTimer) / 1000000;
+				long elapsed = (System.nanoTime() - flinchTimer) / 1000000;
 				if(elapsed > 1000) {
 					flinching = false;
 				}
@@ -264,42 +278,50 @@ public class Player extends MapObject {
 			
 			
 			if(shooting) {
+				
 				if(currentAction != SHOOTING) {
 					currentAction = SHOOTING;
+					animation.setRepeatLength(1,4);
 					animation.setFrames(sprites.get(SHOOTING));
-					animation.setDelay(100);
-					width = 30;
+					animation.setDelay(80);
+					width = 22;
 				}
 			} else if(dy > 0) {
 				if(currentAction != FALLING) {
 					currentAction = FALLING;
-					animation.setFrames(sprites.get(FALLING));
+					animation.setRepeatLength(2, 3);
+					animation.setFrames(sprites.get(JUMPING));
 					animation.setDelay(100);
-					width = 30;
+					width = 22;
 				}
 				
 			} else if(dy < 0) {
 				if(currentAction != JUMPING) {
 					currentAction = JUMPING;
+					animation.setRepeatLength(1, 1);
 					animation.setFrames(sprites.get(JUMPING));
 					animation.setDelay(-1);
-					width = 30;
+					width = 22;
 				}
 			}
 			else if(left || right) {
-				if(currentAction != WALKING) {
+				if (currentAction != WALKING){
 					currentAction = WALKING;
+					animation.setRepeatLength(2,4);
 					animation.setFrames(sprites.get(WALKING));
-					animation.setDelay(40);
-					width = 30;
-				}
+					animation.setDelay(80);
+					width = 22;
+				
+				} 
+				
 			}
 			else {
 				if(currentAction != IDLE) {
 					currentAction = IDLE;
+					animation.setRepeatLength(0, 3);
 					animation.setFrames(sprites.get(IDLE));
-					animation.setDelay(400);
-					width = 30;
+					animation.setDelay(1000);
+					width = 22;
 				}
 			}
 			
@@ -317,10 +339,7 @@ public class Player extends MapObject {
 		public void draw(Graphics2D g){
 			setMapPosition();
 			
-			// draw coin Projectiles
-			for(int i = 0; i < coinProjectiles.size(); i++) {
-				coinProjectiles.get(i).draw(g);
-			}
+			
 			
 			// draw player
 			if(flinching) {
@@ -332,6 +351,11 @@ public class Player extends MapObject {
 			}
 			
 			super.draw(g);
+			
+			// draw coin Projectiles
+						for(int i = 0; i < coinProjectiles.size(); i++) {
+							coinProjectiles.get(i).draw(g);
+						}
 		}
 		
 		

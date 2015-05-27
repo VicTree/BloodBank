@@ -24,7 +24,7 @@ private Background bg;
 	
 	public LevelSelectState(GameStateManager gsm, String background,String title, String[] options,
 			Color titleColor, Color oColor, Color oColor2, Font titleFont, Font font) {
-		gsm.setState(GameStateManager.LEVELSELECTOR);
+		//gsm.setState(GameStateManager.LEVELSELECTOR);
 		this.gsm = gsm;
 		this.options = options;
 		this.title = title;
@@ -77,7 +77,7 @@ private Background bg;
 		// draw title
 		g.setColor(titleColor);
 		g.setFont(titleFont);
-		g.drawString("title", 80, 70);
+		g.drawString(title, 80, 70);
 		
 		// draw menu options
 		g.setFont(font);

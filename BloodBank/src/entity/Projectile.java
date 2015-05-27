@@ -24,21 +24,21 @@ public class Projectile extends MapObject {
 		if(right) dx = moveSpeed;
 		else dx = -moveSpeed;
 		
-		fallSpeed = .15; //might
+		fallSpeed = .3; //might
 		maxFallSpeed = 4; //need
 		dy = fallSpeed;  //fix
 		
-		width = 30;
-		height = 30;
-		cwidth = 14;
-		cheight = 14;
+		width = 24;
+		height = 9;
+		cwidth = 24;
+		cheight = 9;
 		
 		// load sprites
 		try {
 			
 			BufferedImage spritesheet = ImageIO.read(
 				getClass().getResourceAsStream(
-					filename
+					"/projectiles/" + filename + ".png"
 				)
 			);
 			
@@ -52,7 +52,7 @@ public class Projectile extends MapObject {
 				);
 			}
 			
-			hitSprites = new BufferedImage[3];
+			hitSprites = new BufferedImage[4];
 			for(int i = 0; i < hitSprites.length; i++) {
 				hitSprites[i] = spritesheet.getSubimage(
 					i * width,
@@ -63,6 +63,7 @@ public class Projectile extends MapObject {
 			}
 			
 			animation = new Animation();
+			animation.setRepeatLength(0,4);
 			animation.setFrames(sprites);
 			animation.setDelay(70);
 			
