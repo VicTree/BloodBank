@@ -151,14 +151,14 @@ public class Level1State extends GameState {
 		if(k == KeyEvent.VK_LEFT) player1.setLeft(false);
 		if(k == KeyEvent.VK_RIGHT) player1.setRight(false);
 		if(k == KeyEvent.VK_UP) player1.setUp(false);
-		if(k == KeyEvent.VK_COMMA) player1.setDown(false);
-		if(k == KeyEvent.VK_PERIOD) player1.setJumping(false);
+		if(k == KeyEvent.VK_DOWN) player1.setDown(false);
+		if(k == KeyEvent.VK_COMMA) player1.setJumping(false);
 		
 		if(k == KeyEvent.VK_A) player2.setLeft(false);
 		if(k == KeyEvent.VK_D) player2.setRight(false);
 		if(k == KeyEvent.VK_W) player2.setUp(false);
 		if(k == KeyEvent.VK_S) player2.setDown(false);
-		if(k == KeyEvent.VK_V) player2.setJumping(false);
+		if(k == KeyEvent.VK_C) player2.setJumping(false);
 	}
 	
 }

@@ -300,9 +300,9 @@ public class Player extends MapObject {
 			} else if(dy < 0) {
 				if(currentAction != JUMPING) {
 					currentAction = JUMPING;
-					animation.setRepeatLength(1, 1);
+					animation.setRepeatLength(1, 2);
 					animation.setFrames(sprites.get(JUMPING));
-					animation.setDelay(-1);
+					animation.setDelay(80);
 					width = 22;
 				}
 			}
