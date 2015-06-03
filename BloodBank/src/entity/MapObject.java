@@ -78,8 +78,8 @@ public abstract class MapObject {
 	
 	public Rectangle getRectangle() {
 		return new Rectangle(
-				(int)x ,
-				(int)y ,
+				(int)x -cwidth/2,
+				(int)y -cheight/2,
 				cwidth,
 				cheight
 		);
