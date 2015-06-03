@@ -84,6 +84,7 @@ public class Level1State extends GameState {
 		
 		player2.update();
 		player2.checkPickUps(pickUps);
+		player2.checkAttack(players);
 		
 		for (PickUps p: pickUps){
 			p.update();
@@ -93,11 +94,11 @@ public class Level1State extends GameState {
 			}
 		}
 		
-		if((System.nanoTime() - time)/2  > 999999999){
+		if((System.nanoTime() - time)/4  > 999999999){
 			time = System.nanoTime();
 			pickUps.add(new PickUps(tileMap,"coinSpriteSheet"));
 			
-			pickUps.get(coinIndex).setPosition(Math.random() * 480, 100);
+			pickUps.get(coinIndex).setPosition(Math.random() * 480, 10);
 			coinIndex+=1;
 		}
 		
@@ -133,8 +134,15 @@ public class Level1State extends GameState {
 		if(k == KeyEvent.VK_RIGHT) player1.setRight(true);
 		if(k == KeyEvent.VK_UP) player1.setUp(true);
 		if(k == KeyEvent.VK_DOWN) player1.setDown(true);
-		if(k == KeyEvent.VK_W) player1.setJumping(true);
-		if(k == KeyEvent.VK_F) player1.setShooting();
+		if(k == KeyEvent.VK_COMMA) player1.setJumping(true);
+		if(k == KeyEvent.VK_PERIOD) player1.setShooting();
+		
+		if(k == KeyEvent.VK_A) player2.setLeft(true);
+		if(k == KeyEvent.VK_D) player2.setRight(true);
+		if(k == KeyEvent.VK_W) player2.setUp(true);
+		if(k == KeyEvent.VK_S) player2.setDown(true);
+		if(k == KeyEvent.VK_C) player2.setJumping(true);
+		if(k == KeyEvent.VK_V) player2.setShooting();
 
 	}
 	
@@ -143,8 +151,14 @@ public class Level1State extends GameState {
 		if(k == KeyEvent.VK_LEFT) player1.setLeft(false);
 		if(k == KeyEvent.VK_RIGHT) player1.setRight(false);
 		if(k == KeyEvent.VK_UP) player1.setUp(false);
-		if(k == KeyEvent.VK_DOWN) player1.setDown(false);
-		if(k == KeyEvent.VK_W) player1.setJumping(false);
+		if(k == KeyEvent.VK_COMMA) player1.setDown(false);
+		if(k == KeyEvent.VK_PERIOD) player1.setJumping(false);
+		
+		if(k == KeyEvent.VK_A) player2.setLeft(false);
+		if(k == KeyEvent.VK_D) player2.setRight(false);
+		if(k == KeyEvent.VK_W) player2.setUp(false);
+		if(k == KeyEvent.VK_S) player2.setDown(false);
+		if(k == KeyEvent.VK_V) player2.setJumping(false);
 	}
 	
 }

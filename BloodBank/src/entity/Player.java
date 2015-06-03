@@ -122,7 +122,7 @@ public class Player extends MapObject {
 		
 		
 		
-		public void checkAttack(ArrayList<Player> players){
+		public void checkAttack(ArrayList<Player> players){ //needs fix
 			players.remove(this);
 			
 			for(Player p: players){
@@ -143,6 +143,8 @@ public class Player extends MapObject {
 				
 			}
 			}
+			
+			players.add(this);
 			
 		}
 		

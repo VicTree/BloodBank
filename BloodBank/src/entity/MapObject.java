@@ -73,13 +73,13 @@ public abstract class MapObject {
 	public boolean intersects(MapObject o) {
 		Rectangle r1 = getRectangle();
 		Rectangle r2 = o.getRectangle();
-		return r1.intersects(r2);
+		return r1.intersects(r2) || r2.intersects(r1);
 	}
 	
 	public Rectangle getRectangle() {
 		return new Rectangle(
-				(int)x - cwidth,
-				(int)y - cheight,
+				(int)x ,
+				(int)y ,
 				cwidth,
 				cheight
 		);
@@ -203,18 +203,20 @@ public abstract class MapObject {
 		if(facingRight) {
 			g.drawImage(
 				animation.getImage(),
-				(int)(x + xmap - width / 2),
-				(int)(y + ymap - height / 2),
+				(int)(x + xmap - cwidth / 2),
+				(int)(y + ymap - cheight / 2),
+				cwidth,
+				cheight,
 				null
 			);
 		}
 		else {
 			g.drawImage(
 				animation.getImage(),
-				(int)(x + xmap - width / 2 + width),
-				(int)(y + ymap - height / 2),
-				-width,
-				height,
+				(int)(x + xmap - cwidth / 2 + cwidth),
+				(int)(y + ymap - cheight / 2),
+				-cwidth,
+				cheight,
 				null
 			);
 		}

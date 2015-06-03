@@ -16,7 +16,7 @@ public class GameStateManager extends GameStateManagerAb{
 	public final static int NumStates = 5;
 	
 	String[] options = {"Start", "Help", "Quit"};
-	String[] levelOptions = {"Level 1"};
+	String[] levelOptions = {"Level 1", "Level 2"};
 	
 	public GameStateManager(){
 		super();
@@ -36,11 +36,13 @@ public class GameStateManager extends GameStateManagerAb{
 		*/
 		
 		switch (state){
-		case 1: gameStates[state] = new MenuState(this, "testBackground", "BloodBank", options, Color.gray, Color.RED, Color.blue, new Font("Arial",Font.PLAIN, 20), new Font("Calibri",Font.PLAIN, 12));
+		case 1: gameStates[state] = new MenuState(this, "testBackground", "BloodBank Title v3.0", options, Color.gray, Color.RED, Color.blue, new Font("Arial",Font.PLAIN, 20), new Font("Calibri",Font.PLAIN, 12));
 				break;
 		case 2: gameStates[state] = new LevelSelectState(this, "testBackground", "Pick your stupid level", levelOptions, Color.gray, Color.RED, Color.blue, new Font("Arial",Font.PLAIN, 20), new Font("Calibri",Font.PLAIN, 12));
 				break;
 		case 3: gameStates[state] = new Level1State(this, "testBackground", "environmentMap", "Level1", "music");
+				break;
+		case 4: gameStates[state] = new Level1State(this, "testBackground", "environmentMap", "Level2", "music");
 		}
 	}
 	

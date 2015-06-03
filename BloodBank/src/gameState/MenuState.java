@@ -2,6 +2,10 @@ package gameState;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import tileMap.Background;
 
@@ -10,7 +14,7 @@ public class MenuState extends GameState {
 	private Background bg;
 	
 	private int currentChoice = 0;
-	String title;
+	BufferedImage title;
 	private String[] options;
 	private String[] standardOptions = {"Start", "Help", "Quit"};
 	
@@ -26,7 +30,13 @@ public class MenuState extends GameState {
 		
 		this.gsm = gsm;
 		this.options = options;
-		this.title = title;
+		try {
+			this.title = ImageIO.read(
+					getClass().getResourceAsStream("/menus/" + title + ".png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		this.oColor = oColor;
 		this.oColor2 = oColor2;
 		try {
@@ -46,10 +56,9 @@ public class MenuState extends GameState {
 		
 	}
 	
-	public MenuState(GameStateManager gsm, String title){
+	public MenuState(GameStateManager gsm){
 		this.gsm = gsm;
 		options = standardOptions;
-		this.title = title;
 		oColor = Color.CYAN;
 		oColor2 = Color.BLACK;
 		bg = null;
@@ -76,7 +85,7 @@ public class MenuState extends GameState {
 		// draw title
 		g.setColor(titleColor);
 		g.setFont(titleFont);
-		g.drawString(title, 80, 70);
+		g.drawImage(title,0,0, (int)(title.getWidth()*3),(int)(title.getHeight() * 3),null);
 		
 		// draw menu options
 		g.setFont(font);
@@ -87,7 +96,7 @@ public class MenuState extends GameState {
 			else {
 				g.setColor(oColor2);
 			}
-			g.drawString(options[i], 145, 140 + i * 15);
+			g.drawString(options[i],72 +  i * 150, 265);
 		}
 		
 	}
@@ -108,13 +117,13 @@ public class MenuState extends GameState {
 		if(k == KeyEvent.VK_ENTER){
 			select();
 		}
-		if(k == KeyEvent.VK_UP) {
+		if(k == KeyEvent.VK_LEFT) {
 			currentChoice--;
 			if(currentChoice == -1) {
 				currentChoice = options.length - 1;
 			}
 		}
-		if(k == KeyEvent.VK_DOWN) {
+		if(k == KeyEvent.VK_RIGHT) {
 			currentChoice++;
 			if(currentChoice == options.length) {
 				currentChoice = 0;

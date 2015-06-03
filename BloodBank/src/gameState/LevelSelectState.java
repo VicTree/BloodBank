@@ -109,13 +109,13 @@ private Background bg;
 		if(k == KeyEvent.VK_ENTER){
 			select();
 		}
-		if(k == KeyEvent.VK_LEFT) {
+		if(k == KeyEvent.VK_UP) {
 			currentChoice--;
 			if(currentChoice == -1) {
 				currentChoice = options.length - 1;
 			}
 		}
-		if(k == KeyEvent.VK_RIGHT) {
+		if(k == KeyEvent.VK_DOWN) {
 			currentChoice++;
 			if(currentChoice == options.length) {
 				currentChoice = 0;
